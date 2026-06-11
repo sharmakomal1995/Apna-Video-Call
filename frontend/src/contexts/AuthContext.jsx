@@ -1,21 +1,18 @@
-// import { Children, createContext, useState } from "react";
+
 import { createContext, useState, useContext } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-
+import server from "../environment";
 
 export const AuthContext = createContext({});
 
 const client = axios.create({
-    baseURL: "http://localhost:8000/api/v1/users"
+    baseURL: `${server}/api/v1/users`
 })
 
 export const AuthProvider = ({ children }) => {
-    // const authContext = useContext(AuthContext);
 
     const [userData, setUserData] = useState(null);
-
-    // const Router = useNavigate;
 
     const handleRegister = async (name, username, password) => {
         try {

@@ -16,8 +16,9 @@ import Badge from '@mui/material/Badge';
 import ChatIcon from '@mui/icons-material/Chat';
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import server from '../environment';
 
-const server_url = "http://localhost:8000";
+const server_url = server;
 
 const peerConfigConnections = {
     iceServers: [{ urls: "stun:stun.l.google.com:19302" }]
@@ -71,13 +72,12 @@ export default function VideoMeetComponent() {
 
                 setScreen(true);
 
-                // ✅ set local stream
+                // set local stream
                 window.localStream = stream;
                 localVideoRef.current.srcObject = stream;
 
-                // ✅ replace track for all users
                 const videoTrack = stream.getVideoTracks()[0];
-                const audioTrack = window.localStream.getAudioTracks()[0]; // 👈 ADD THIS
+                const audioTrack = window.localStream.getAudioTracks()[0]; 
 
                 for (let id in connections.current) {
                     let senders = connections.current[id].getSenders();
@@ -90,11 +90,11 @@ export default function VideoMeetComponent() {
                     }
 
                     if (audioSender && audioTrack) {
-                        audioSender.replaceTrack(audioTrack); // ✅ THIS FIXES AUDIO
+                        audioSender.replaceTrack(audioTrack); 
                     }
                 }
 
-                // ✅ when screen share stops
+                // when screen share stops
                 stream.getTracks().forEach(track => {
                     track.onended = async () => {
 
@@ -136,9 +136,8 @@ export default function VideoMeetComponent() {
                     audio: true
                 });
 
-                // 🔥 ADD THIS (IMPORTANT)
                 camStream.getAudioTracks().forEach(track => {
-                    track.enabled = false; // mic OFF
+                    track.enabled = false; 
                 });
 
                 window.localStream = camStream;
@@ -171,7 +170,7 @@ export default function VideoMeetComponent() {
 
             if (window.localStream) {
                 window.localStream.getAudioTracks().forEach(track => {
-                    track.enabled = newState; // ✅ real mute/unmute
+                    track.enabled = newState; 
                 });
             }
 
@@ -185,7 +184,7 @@ export default function VideoMeetComponent() {
 
             if (window.localStream) {
                 window.localStream.getVideoTracks().forEach(track => {
-                    track.enabled = newState; // ✅ actual ON/OFF
+                    track.enabled = newState; 
                 });
             }
 
@@ -201,12 +200,10 @@ export default function VideoMeetComponent() {
 
                 localVideoRef.current.srcObject = stream;
 
-                // ✅ mic OFF
                 stream.getAudioTracks().forEach(track => {
                     track.enabled = false;
                 });
 
-                // ✅ video ON force (IMPORTANT FIX)
                 stream.getVideoTracks().forEach(track => {
                     track.enabled = true;
                 });
@@ -234,7 +231,7 @@ export default function VideoMeetComponent() {
 
             if (signal.sdp.type === "offer") {
 
-                // ✅ FIX: duplicate offer ignore
+                //  FIX: duplicate offer ignore
                 if (connection.signalingState !== "stable") {
                     console.log("Skipping duplicate offer");
                     return;
@@ -251,7 +248,6 @@ export default function VideoMeetComponent() {
 
             } else if (signal.sdp.type === "answer") {
 
-                // ✅ FIX: wrong state answer ignore
                 if (connection.signalingState !== "have-local-offer") {
                     console.log("Skipping invalid answer");
                     return;
@@ -332,7 +328,6 @@ export default function VideoMeetComponent() {
         setAskForUsername(false);
 
         try {
-            // 🔥 fresh stream lo yahin
             const stream = await navigator.mediaDevices.getUserMedia({
                 video: true,
                 audio: true
@@ -341,7 +336,7 @@ export default function VideoMeetComponent() {
             cameraStreamRef.current = stream;
             window.localStream = stream;
 
-            // ✅ local video show
+            //  local video show
             if (localVideoRef.current) {
                 localVideoRef.current.srcObject = stream;
 
@@ -350,7 +345,7 @@ export default function VideoMeetComponent() {
                 };
             }
 
-            // ✅ mic OFF by default
+            //  mic OFF by default
             stream.getAudioTracks().forEach(track => {
                 track.enabled = false;
             });
@@ -358,10 +353,9 @@ export default function VideoMeetComponent() {
             setVideo(true);
             setAudio(false);
 
-            // ✅ ab socket connect
             connectToSocketServer();
 
-            // ✅ 🔥 HISTORY SAVE (ADD THIS)
+            //  HISTORY SAVE
             await axios.post("/add_to_activity", {
                 token: localStorage.getItem("token"),
                 meeting_code: window.location.pathname
@@ -450,7 +444,7 @@ export default function VideoMeetComponent() {
 
                         <div className={styles.confrenceView}>
                             {videos.map(v => {
-                                console.log("Audio Tracks:", v.stream.getAudioTracks()); // 👈 yaha
+                                console.log("Audio Tracks:", v.stream.getAudioTracks()); 
 
                                 return (
                                     <div key={v.socketId}>
