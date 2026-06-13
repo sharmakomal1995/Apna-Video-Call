@@ -169,25 +169,21 @@ http://localhost:3000
 
 ## 📸 Screenshots
 
-### Login Page
+### Landing Page
 
-Add screenshot here
+![Landing Page](screenshots/landing-page.png)
 
-```md
-![Login](screenshots/login.png)
-```
+### Home Page
 
-### Video Meeting Room
+![Home Page](screenshots/home-page.png)
 
-```md
-![Meeting Room](screenshots/meeting-room.png)
-```
+### Authentication Page
 
-### Chat Section
+![Authentication Page](screenshots/login-page.png)
 
-```md
-![Chat](screenshots/chat.png)
-```
+### Video Call & Chat Interface
+
+![Video Call & Chat Interface](screenshots/video-call-chat.png)
 
 ---
 
