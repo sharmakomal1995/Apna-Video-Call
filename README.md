@@ -6,6 +6,10 @@ https://apnavideocallfrontend-wdy3.onrender.com
 
 A full-stack real-time video conferencing web application that enables users to communicate through live video, audio, and instant messaging. Users can create accounts, join meetings, interact with multiple participants simultaneously, and access their meeting history. The application is built using WebRTC for peer-to-peer media streaming and Socket.io for real-time communication.
 
+### Home Page
+
+![Home Page](screenshots/home-page.png)
+
 ## 🚀 Features
 
 ### Authentication
@@ -172,10 +176,6 @@ http://localhost:3000
 ### Landing Page
 
 ![Landing Page](screenshots/landing-page.png)
-
-### Home Page
-
-![Home Page](screenshots/home-page.png)
 
 ### Authentication Page
 
